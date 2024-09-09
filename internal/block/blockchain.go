@@ -26,10 +26,12 @@ func GetBlockchain() *blockchain {
 	return b
 }
 
-func (bc *blockchain) ListBlocks() {
+func (bc *blockchain) ListBlocks() string {
+	blcokInfo := ""
 	for _, info := range bc.blocks {
-		fmt.Printf("[%s] %s / %s \n", info.data, info.hash, info.prevHash)
+		blcokInfo += fmt.Sprintf("[%s] %s / %s \n", info.data, info.hash, info.prevHash)
 	}
+	return blcokInfo
 }
 
 func (bc *blockchain) AddBlock(data string) {
