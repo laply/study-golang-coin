@@ -5,24 +5,24 @@ import (
 	"fmt"
 )
 
-type block struct {
-	data     string
-	hash     string
-	prevHash string
+type Block struct {
+	Data     string
+	Hash     string
+	PrevHash string
 }
 
-func (b *block) calculateHash() {
-	b.hash = fmt.Sprintf("%x", sha256.Sum256([]byte(b.data+b.prevHash)))
+func (b *Block) calculateHash() {
+	b.Hash = fmt.Sprintf("%x", sha256.Sum256([]byte(b.Data+b.PrevHash)))
 }
 
-func (b *block) newBlock(data string) *block {
-	newBlock := &block{data: data, prevHash: b.hash}
+func (b *Block) newBlock(data string) *Block {
+	newBlock := &Block{Data: data, PrevHash: b.Hash}
 	newBlock.calculateHash()
 	return newBlock
 }
 
-func initBlock(data string) *block {
-	b := &block{data: data, prevHash: ""}
+func initBlock(data string) *Block {
+	b := &Block{Data: data, PrevHash: ""}
 	b.calculateHash()
 	return b
 }

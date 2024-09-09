@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>COIN</title>
+    </head>
+    <body>
+        <h1>COIN</h1>
+        <p>Welcome to the COIN home page</p>
+
+        <div>
+            {{ range .Blocks }}
+            <div>
+                <h2>{{.Data}}</h2>
+                <p>{{.Hash}}</p>
+                <p>{{.PrevHash}}</p>
+            </div>
+            {{ end }}
+        </div>
+    </body>
+</html>

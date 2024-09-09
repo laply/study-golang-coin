@@ -9,14 +9,14 @@ var b *blockchain
 var once sync.Once
 
 type blockchain struct {
-	blocks []block
+	blocks []Block
 }
 
 func GetBlockchain() *blockchain {
 	if b == nil {
 		once.Do(func() {
 			b = &blockchain{
-				[]block{*initBlock("Genesis Block")},
+				[]Block{*initBlock("Genesis Block")},
 			}
 		})
 
@@ -29,9 +29,13 @@ func GetBlockchain() *blockchain {
 func (bc *blockchain) ListBlocks() string {
 	blcokInfo := ""
 	for _, info := range bc.blocks {
-		blcokInfo += fmt.Sprintf("[%s] %s / %s \n", info.data, info.hash, info.prevHash)
+		blcokInfo += fmt.Sprintf("[%s] %s / %s \n\n", info.Data, info.Hash, info.PrevHash)
 	}
 	return blcokInfo
+}
+
+func (bc *blockchain) GetBlocks() []Block {
+	return bc.blocks
 }
 
 func (bc *blockchain) AddBlock(data string) {

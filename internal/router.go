@@ -2,6 +2,7 @@ package app
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 
 	"github.com/laply/study-golang-coin/internal/block"
@@ -18,10 +19,21 @@ func InitRouter(port string) *Router {
 func (r *Router) Run() error {
 	fmt.Printf("Listening on http://localhost%s\n", r.port)
 
-	bc := block.GetBlockchain()
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		tmpl, err := template.ParseFiles("templates/pages/index.gohtml")
+		if err != nil {
+			fmt.Fprint(w, err)
+			return
+		}
+
+		tmpl.Execute(w, struct {
+			Blocks []block.Block
+		}{Blocks: block.GetBlockchain().GetBlocks()})
+
+	})
 
 	http.HandleFunc("/list", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, bc.ListBlocks())
+		fmt.Fprint(w, block.GetBlockchain().ListBlocks())
 	})
 	http.HandleFunc("/add-block", func(w http.ResponseWriter, r *http.Request) {
 		data := r.URL.Query().Get("data")
@@ -31,8 +43,15 @@ func (r *Router) Run() error {
 			return
 
 		} else {
-			bc.AddBlock(data)
-			fmt.Fprint(w, "Add Block [", data, "]")
+			block.GetBlockchain().AddBlock(data)
+
+			tmpl, err := template.ParseFiles("templates/pages/add.gohtml")
+			if err != nil {
+				fmt.Fprint(w, err)
+				return
+			}
+
+			tmpl.Execute(w, data)
 		}
 	})
 
