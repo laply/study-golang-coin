@@ -1,10 +1,17 @@
+{{define "add"}}
+
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>COIN</title>
+<head>
+    {{template "head" .}}
     </head>
     <body>
+      {{template "header"}}
+    <main>
         <h1>Add a new coin [{{.}}]</h1>
     </body>
 </html>
+
+{{end}}
+

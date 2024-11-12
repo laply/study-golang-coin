@@ -1,0 +1,22 @@
+{{define "home"}}
+    <!DOCTYPE html>
+
+<html>
+    <head>
+    {{template "head"}}
+    </head>
+    <body>
+      {{template "header" .}}
+    <main>
+
+        <div>
+            {{ range .Blocks }}
+            {{template "block" .}}
+            {{ end }}
+        </div>
+        </main>
+        {{template "footer"}}
+    </body>
+</html>
+
+{{end}}

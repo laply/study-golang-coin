@@ -1,19 +1,25 @@
 package app
 
+import "github.com/laply/study-golang-coin/explorer"
+
 type App struct {
-	Router *Router
+	Router *explorer.Router
 }
 
 func New() *App {
 
-	router := InitRouter(":4000")
+	router := explorer.InitRouter(":4000")
+
 	return &App{
 		Router: router,
 	}
 }
 
-func (a *App) Run() error {
+const (
+	port        string = ":4000"
+	templateDir string = "explorer/templates/"
+)
 
-	a.Router.Run()
-	return nil
+func (a *App) Run() {
+	a.Router.Run(port, templateDir)
 }
